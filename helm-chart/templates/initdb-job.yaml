@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.init_db.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "init-db.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      name: {{ .Values.init_db.name }}
+      labels:
+        {{- include "init-db.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.init_db.name }}
+          image: '{{.Values.global.repository}}/{{.Values.init_db.image.url}}:{{.Values.init_db.image.tag}}'
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          env:
+            - name: MYSQL_HOST_URL
+              value: {{ .Values.global.MYSQL_DATABASE_URL }}
+            - name: MYSQL_USERNAME
+              value: {{.Values.global.MYSQL_DATABASE_USERNAME }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.global.MYSQL_DATABASE_PASSWORD }}
+            - name: DATABASE_NAME
+              value: {{ .Values.global.MYSQL_DATABASE_NAME }}
+      restartPolicy: Never
+  backoffLimit: 5

@@ -1,25 +1,26 @@
+<?php
+session_start();
+if(!(isset($_SESSION['email']))){
+  header("location:index.php");
+} else if(isset($_SESSION['key'])) {
+  header("location:dashboard.php?q=1");
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>User Profile </title>
 	</head>
 	<body  style="background:#eee;">
-		<?php 
-			session_start();
-			if(!(isset($_SESSION['email']))){
-				header("location:index.php");
-			} else if(isset($_SESSION['key'])) {
-				header("location:dashboard.php?q=1");
-			} else {
-				include_once 'include/connection.php';
-				include_once "include/topbar.php" ;
-				$uid = $_SESSION['userId'];
-				
-				$res = mysqli_query($con, "SELECT * FROM user where id=$uid") or die("Error : User");
-				$row = mysqli_fetch_assoc($res);
-			}
+		<?php
+			include_once 'include/connection.php';
+      include_once "include/topbar.php" ;
+      $uid = $_SESSION['userId'];
+
+      $res = mysqli_query($con, "SELECT * FROM user where id=$uid") or die("Error : User");
+      $row = mysqli_fetch_assoc($res);
 		?>
 		<div class="bg">
 			<div class="container"><!--container start-->
@@ -55,7 +56,7 @@
 									<td>
 										<select name="gender" class="form-control input-md" >
 											<option value="Male" <?php if($row['gender'] == "Male") echo "Selected"; ?>>Male</option>
-											<option value="Female" <?php if($row['gender'] == "Female") echo "Selected"; ?>>Female</option>		
+											<option value="Female" <?php if($row['gender'] == "Female") echo "Selected"; ?>>Female</option>
 										</select>
 									</td>
 								</tr>
@@ -77,12 +78,10 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Footer Start -->
-		<?php
-			include_once("include/footer.php");
-		?>
+		<?php include_once("include/footer.php"); ?>
 		<!-- Footer End -->
-		
+
 	</body>
 </html>

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mysql.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "mysql.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.mysql.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "quiz-time.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "quiz-time.selectorLabels" . | nindent 8 }}
+        app: {{ .Values.mysql.name }}
+    spec:
+      containers:
+        - args:
+            - --lower_case_table_names=1
+            - --skip_ssl
+          image: "{{.Values.mysql.image.url}}:{{.Values.mysql.image.tag}}"
+          env:
+            - name: MYSQL_USER
+              value: {{ .Values.global.MYSQL_DATABASE_USERNAME }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.global.MYSQL_DATABASE_PASSWORD }}
+            - name: MYSQL_ROOT_PASSWORD
+              value: "{{ .Values.mysql.MYSQL_DATABASE_ROOT_PASSWORD }}"
+            - name: MYSQL_DATABASE
+              value: {{ .Values.global.MYSQL_DATABASE_NAME }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          name: {{ .Values.mysql.name }}
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-lib-pvc
+      volumes:
+        - persistentVolumeClaim:
+            claimName: {{ .Values.mysql.pvc.claim_name }}
+          name: mysql-lib-pvc

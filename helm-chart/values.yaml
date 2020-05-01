@@ -1,0 +1,40 @@
+global:
+  repository: "twister22"
+  pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  namespace: "quiz-time"
+  MYSQL_DATABASE_NAME: "quiz_time"
+  MYSQL_DATABASE_USERNAME: "twister"
+  MYSQL_DATABASE_PASSWORD: "soni@123"
+  MYSQL_DATABASE_URL: "mysql-service"
+
+quiz_time:
+  replicaCount: 1
+  name: "quiz-time-app"
+  image:
+    url: "quiz-time/web-app"
+    tag: "v1.0-20200502-030050"
+  service:
+    type: NodePort
+    port: "8080"
+
+init_db:
+  name: "init-db-job"
+  image:
+    url: "quiz-time/init-db"
+    tag: "v1.0-20200502-030050"
+
+mysql:
+  name: "mysql-deployment"
+  replicaCount: 1
+  image:
+    url: "mysql"
+    tag: "5.7"
+  service:
+    type: ClusterIP
+    port: "3306"
+  pvc:
+    claim_name: "mysql-pvc"
+    storage_class: "system"
+    volume_access_mode: "ReadWriteMany"
+  MYSQL_DATABASE_ROOT_PASSWORD: "1653"

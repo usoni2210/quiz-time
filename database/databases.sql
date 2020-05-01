@@ -18,12 +18,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `quiz_time`
---
-CREATE DATABASE IF NOT EXISTS `quiz_time` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `quiz_time`;
-
 -- --------------------------------------------------------
 
 --
@@ -43,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`id`, `email`, `password`) VALUES
-(1, 'admin', 'admin');
+(1, 'admin', 'e6e061838856bf47e1de730719fb2609');
 
 -- --------------------------------------------------------
 
@@ -177,12 +171,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `mob` (`mob`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `user`
---
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `mob`, `gender`, `college`) VALUES
-(1, 'Test', 'Test@mail.com', '03d36b1fc29fffb01b9a0715c795ba9c', '1234567890', 'Male', 'XYZ');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

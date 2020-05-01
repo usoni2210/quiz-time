@@ -1,0 +1,13 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.mysql.pvc.claim_name }}
+  namespace: {{.Values.global.namespace}}
+  labels:
+    {{- include "mysql.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.mysql.pvc.volume_access_mode }}
+  resources:
+    requests:
+      storage: 3Gi
