@@ -12,8 +12,8 @@ quiz_time:
   replicaCount: 1
   name: "quiz-time-app"
   image:
-    url: "quiz-time/web-app"
-    tag: "v1.0-20200502-030050"
+    url: "quiz-time.web-app"
+    tag: "latest"
   service:
     type: NodePort
     port: "8080"
@@ -21,8 +21,8 @@ quiz_time:
 init_db:
   name: "init-db-job"
   image:
-    url: "quiz-time/init-db"
-    tag: "v1.0-20200502-030050"
+    url: "quiz-time.init-db"
+    tag: "latest"
 
 mysql:
   name: "mysql-deployment"
