@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.global.MYSQL_DATABASE_URL }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  type: {{ .Values.mysql.service.type }}
+  selector:
+    app: {{ .Values.mysql.name }}
+  ports:
+    - port: {{.Values.mysql.service.port}}
+      targetPort: 3306
+      name: {{ .Values.mysql.name }}-port

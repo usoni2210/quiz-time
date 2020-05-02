@@ -6,7 +6,8 @@
 	$email = $_POST['email'];
 	$subject = $_POST['subject'];
 	$message = $_POST['message'];
-	
+
+  date_default_timezone_set("Asia/Calcutta");
 	$date=date("Y-m-d");
 	$time=date("h:i:sa");
 	

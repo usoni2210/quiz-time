@@ -1,0 +1,9 @@
+.dockerignore
+.gitignore
+.gitattributes
+Dockerfile
+install.sh
+README.md
+.idea
+.git
+chart

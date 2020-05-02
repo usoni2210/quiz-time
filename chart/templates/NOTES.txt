@@ -1,0 +1,9 @@
+Get the application URL by running these commands:
+{{- if contains "NodePort" .Values.quiz_time.service.type }}
+    echo http://localhost:$(kubectl get --namespace {{ .Values.global.namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ .Values.quiz_time.name }})
+{{- else if contains "LoadBalancer" .Values.quiz_time.service.type }}
+    http://localhost:{{ .Values.quiz_time.service.port }}
+
+    NOTE: It may take a few minutes for the LoadBalancer IP to be available. You can watch the status of by running
+            'kubectl get --namespace {{ .Values.global.namespace }} svc -w {{ .Values.quiz_time.name }}'
+{{- end }}

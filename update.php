@@ -236,10 +236,10 @@
 			isset($_REQUEST['gender']) &&
 			isset($_REQUEST['college']))
 			{
-				echo $name = $_REQUEST['name'];
-				echo $num = $_REQUEST['contact'];
-				echo $gen = $_REQUEST['gender'];
-				echo 	$clg = $_REQUEST['college'];
+				$name = $_REQUEST['name'];
+				$num = $_REQUEST['contact'];
+				$gen = $_REQUEST['gender'];
+				$clg = $_REQUEST['college'];
 				
 				mysqli_query($con,"UPDATE `user` SET `name` = '$name',  `mob` = '$num', `gender` = '$gen', `college` = '$clg' WHERE `user`.`id` = '$userId'");
 				if(mysqli_affected_rows($con) > 0){
@@ -252,6 +252,3 @@
 	}
 
 ?>
-
-
-

@@ -10,6 +10,7 @@
 	
 	$password = stripslashes($password); 
 	$password = addslashes($password);
+	$password = md5($password);
 	
 	$result = mysqli_query($con,"SELECT email FROM admin WHERE email = '$email' and password = '$password'") or die('Error');
 	

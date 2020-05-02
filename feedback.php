@@ -1,25 +1,18 @@
+<?php session_start(); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>Quiz Time || FEEDBACK </title>
-	
-		
+
 	<?php 
 		if(@$_GET['w']){
 			echo'<script>alert("'.@$_GET['w'].'");</script>';
 		}
 	?>
-	
 	</head>
-
 	<body>
-		<?php
-			session_start();
-			include_once "include/topbar.php";
-			
-		?>
-		
+		<?php include_once "include/topbar.php"; ?>
 		<div class="bg1">
 			<div class="row">
 				<div class="col-md-3"></div>

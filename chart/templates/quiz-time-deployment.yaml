@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.quiz_time.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+  {{- include "quiz-time.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.quiz_time.replicaCount }}
+  selector:
+    matchLabels:
+  {{- include "quiz-time.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+    {{- include "quiz-time.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.quiz_time.name }}
+          image: "{{.Values.global.repository}}/{{.Values.quiz_time.image.url}}:{{.Values.quiz_time.image.tag}}"
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          env:
+            - name: MYSQL_HOST_URL
+              value: {{ .Values.global.MYSQL_DATABASE_URL }}
+            - name: MYSQL_USERNAME
+              value: {{.Values.global.MYSQL_DATABASE_USERNAME }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.global.MYSQL_DATABASE_PASSWORD }}
+            - name: DATABASE_NAME
+              value: {{ .Values.global.MYSQL_DATABASE_NAME }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
